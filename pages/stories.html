@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>她们的故事 · 珣玗 XUNYU</title>
+<meta name="description" content="珣玗她们的故事——每一位女性都可以在这里留言、分享、彼此看见。">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/pages.css">
+<style>
+  .stories-page .page-hero { background: linear-gradient(180deg, var(--pink), #fff); }
+  .stories-layout { display: grid; grid-template-columns: 360px 1fr; gap: 28px; align-items: start; }
+  .submit-card {
+    background: #fff; border-radius: var(--radius); padding: 26px;
+    box-shadow: var(--shadow); position: sticky; top: 84px;
+  }
+  .submit-card h2 { font-size: 20px; margin-bottom: 6px; }
+  .submit-card .sub { color: var(--text-light); font-size: 13.5px; margin-bottom: 18px; }
+  .submit-card .form-row { margin-bottom: 14px; }
+  .submit-card textarea { width: 100%; resize: vertical; }
+  .submit-card .tag-options { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+  .submit-card .tag-options label {
+    font-size: 12.5px; padding: 5px 12px; border-radius: 999px;
+    background: var(--lavender); color: var(--purple-dark); cursor: pointer;
+    border: 1.5px solid transparent;
+  }
+  .submit-card .tag-options input { display: none; }
+  .submit-card .tag-options input:checked + label {
+    background: var(--purple); color: #fff; border-color: var(--purple);
+  }
+  .login-tip {
+    background: var(--lavender); border-radius: 10px; padding: 12px 14px;
+    font-size: 13px; color: var(--purple-dark); margin-bottom: 16px;
+  }
+  .login-tip a { color: var(--purple); font-weight: 600; text-decoration: underline; }
+  .story-wall { display: flex; flex-direction: column; gap: 18px; }
+  .story-item {
+    background: #fff; border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .story-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .story-avatar {
+    width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .story-meta h3 { font-size: 15.5px; margin-bottom: 2px; }
+  .story-meta span { font-size: 12px; color: var(--text-light); }
+  .story-tag {
+    display: inline-block; font-size: 11.5px; padding: 3px 10px; border-radius: 999px;
+    background: var(--lavender); color: var(--purple); font-weight: 600; margin-bottom: 10px;
+  }
+  .story-item p { font-size: 14.5px; line-height: 1.8; color: var(--text); }
+  .story-actions { margin-top: 14px; }
+  .story-actions button {
+    border: none; background: transparent; color: var(--text-light); font-size: 13px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .story-actions button:hover { color: var(--purple); }
+  .empty-wall {
+    text-align: center; padding: 50px 20px; color: var(--text-light);
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+  }
+  .hero-stories {
+    background: #fff; border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow); margin-bottom: 22px;
+  }
+  .hero-stories h2 { font-size: 20px; margin-bottom: 6px; }
+  .hero-stories .sub { color: var(--text-light); font-size: 13.5px; margin-bottom: 18px; }
+  .hero-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+  }
+  .hero-card {
+    background: var(--lavender); border-radius: 14px; padding: 18px;
+    border-left: 4px solid var(--purple); display: flex; gap: 14px;
+  }
+  .hero-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; background: #fff; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(107,45,142,.12);
+  }
+  .hero-body { flex: 1; min-width: 0; }
+  .hero-card h3 { font-size: 15px; margin-bottom: 6px; color: var(--purple-dark); }
+  .hero-card p { font-size: 13px; line-height: 1.7; color: var(--text); }
+  .hero-card .hero-tag {
+    display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: var(--purple); color: #fff; margin-bottom: 8px;
+  }
+  .solemn-note {
+    background: #FFF7E6; border-radius: 10px; padding: 12px 14px;
+    font-size: 12.5px; color: var(--text); line-height: 1.7; margin-top: 16px;
+  }
+  .ordinary-stories {
+    background: #fff; border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow); margin-bottom: 22px;
+  }
+  .ordinary-stories h2 { font-size: 20px; margin-bottom: 6px; }
+  .ordinary-stories .sub { color: var(--text-light); font-size: 13.5px; margin-bottom: 18px; }
+  .ordinary-list { display: flex; flex-direction: column; gap: 16px; }
+  .ordinary-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 16px; border-radius: 12px; background: var(--lavender);
+    border-left: 4px solid var(--orange);
+  }
+  .ordinary-avatar {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--orange);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; flex-shrink: 0;
+  }
+  .ordinary-body { flex: 1; }
+  .ordinary-body h3 { font-size: 15px; margin-bottom: 4px; color: var(--purple-dark); }
+  .ordinary-body p { font-size: 13.5px; line-height: 1.8; color: var(--text); }
+  .ordinary-tag {
+    display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: var(--orange); color: #fff; margin-bottom: 6px;
+  }
+  @media (max-width: 900px) {
+    .stories-layout { grid-template-columns: 1fr; }
+    .submit-card { position: static; }
+    .hero-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="stories-page">
+
+<header class="site-header">
+  <nav class="nav container">
+    <a class="logo" href="../index.html" aria-label="珣玗首页">
+      <span class="logo-mark">珣玗</span><span class="logo-en">XUNYU</span>
+    </a>
+    <div class="search" role="search">
+      <input type="search" placeholder="搜索…" aria-label="搜索"><button type="button">🔍</button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./mall.html">安全商城</a></li>
+      <li><a href="./evidence.html">留证空间</a></li>
+      <li><a href="./legal.html">她课堂</a></li>
+      <li><a href="./warm-current.html">暖流计划</a></li>
+      <li><a href="./stories.html">她们的故事</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="jue-badge">💠 珏力 <b id="jueValue">60</b></span>
+      <span id="authBox"></span>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="page-hero stories-hero">
+    <div class="container">
+      <h1>✨ 她们的故事</h1>
+      <p>平凡的女性，也拥有伟大的力量。在这里留下你的故事，或为他人的勇气点一盏灯。</p>
+    </div>
+  </section>
+
+  <section class="container page-body stories-layout">
+    <aside class="submit-card">
+      <h2>📝 我来发声</h2>
+      <p class="sub">你的故事可能成为另一个她的光。</p>
+      <div class="login-tip" id="storyLoginTip">
+        <a href="./auth.html?redirect=./stories.html">登录</a> 后可留下你的故事，让彼此看见。
+      </div>
+      <form id="storyForm">
+        <div class="form-row">
+          <label for="storyNickname">昵称</label>
+          <input type="text" id="storyNickname" placeholder="可留空，默认匿名" maxlength="16">
+        </div>
+        <div class="form-row">
+          <label>故事类型</label>
+          <div class="tag-options">
+            <input type="radio" name="storyTag" id="tag1" value="自我保护" checked>
+            <label for="tag1">自我保护</label>
+            <input type="radio" name="storyTag" id="tag2" value="互助经历">
+            <label for="tag2">互助经历</label>
+            <input type="radio" name="storyTag" id="tag3" value="法律知识">
+            <label for="tag3">法律知识</label>
+            <input type="radio" name="storyTag" id="tag4" value="其他">
+            <label for="tag4">其他</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="storyContent">你的故事</label>
+          <textarea id="storyContent" rows="5" placeholder="写下你想分享的经历、感悟或建议…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-accent" style="width:100%;" id="storySubmitBtn">提交故事</button>
+      </form>
+    </aside>
+
+    <div class="story-wall" id="storyWall">
+      <!-- 真实女性力量榜样 -->
+      <div class="hero-stories">
+        <h2>💜 真实女性力量 · 她榜样</h2>
+        <p class="sub">从科学家、运动员、教育家，到战争幸存者与平凡母亲——她们用各自的方式，诠释了女性的坚韧与力量。</p>
+        <div class="hero-grid">
+          <div class="hero-card">
+            <div class="hero-avatar">🚄</div>
+            <div class="hero-body">
+              <span class="hero-tag">科技创新</span>
+              <h3>单杏花 · 12306 背后的“女掌门”</h3>
+              <p>她带领团队攻克全球最大的铁路票务系统之一，让亿万旅客的回家路更顺畅。在男性主导的技术领域，她用代码铺就了中国人独有的“春运温度”。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">📚</div>
+            <div class="hero-body">
+              <span class="hero-tag">教育扶贫</span>
+              <h3>张桂梅 · 大山女孩的“校长妈妈”</h3>
+              <p>她在云南华坪创办免费女子高中，帮助两千多名山区女孩考入大学。身患重病仍坚守讲台，她用一生证明：一个女孩受教育，可以改变三代人。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">🔬</div>
+            <div class="hero-body">
+              <span class="hero-tag">科学探索</span>
+              <h3>屠呦呦 · 青蒿素的发现者</h3>
+              <p>她从传统中医药中汲取灵感，发现青蒿素，挽救了全球数百万疟疾患者的生命，成为中国首位诺贝尔生理学或医学奖得主。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">🏐</div>
+            <div class="hero-body">
+              <span class="hero-tag">体育精神</span>
+              <h3>郎平 · 女排精神的缔造者</h3>
+              <p>作为运动员和教练员，她带领中国女排多次站上世界之巅。“女排精神”不仅是体育传奇，更是永不言弃的女性力量象征。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">🚀</div>
+            <div class="hero-body">
+              <span class="hero-tag">航天探索</span>
+              <h3>王亚平 · 中国首位出舱女航天员</h3>
+              <p>她两次执行载人航天任务，成为中国首位进驻空间站、首位出舱活动的女航天员，用行动告诉更多女孩：天空不是极限。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">🏛️</div>
+            <div class="hero-body">
+              <span class="hero-tag">文化传承</span>
+              <h3>樊锦诗 · “敦煌女儿”</h3>
+              <p>她扎根敦煌五十余载，致力于莫高窟的保护与研究，被誉为“敦煌女儿”。她让千年壁画在数字时代重焕光彩。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">🕯️</div>
+            <div class="hero-body">
+              <span class="hero-tag">历史记忆</span>
+              <h3>南京大屠杀慰安妇幸存者 · 不该被遗忘的她们</h3>
+              <p>她们是战争最残酷的见证者。晚年，她们一次次站上法庭、面对镜头，只为讨回一个道歉、一段被正视的历史。她们的名字与勇气，值得被永远铭记与致敬。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">👵</div>
+            <div class="hero-body">
+              <span class="hero-tag">平凡伟大</span>
+              <h3>我的奶奶 · 拉扯孩子长大的那双手</h3>
+              <p>她没有显赫的名字，却用一粥一饭、一针一线，把儿女送出山村，把孙辈送进学堂。无数像她一样的女性，沉默地撑起了一个家的天空。</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-avatar">✨</div>
+            <div class="hero-body">
+              <span class="hero-tag">等你来写</span>
+              <h3>你的故事 · 也可以成为光</h3>
+              <p>无论是突破困境、守护他人，还是日复一日的坚持，每一位女性的经历都值得被看见。在左侧写下你的故事，让更多人知道：她，也可以很有力量。</p>
+            </div>
+          </div>
+        </div>
+        <p class="solemn-note">
+          <b>致敬与说明：</b>以上历史与现实中的女性形象，均用于表达敬意与纪念。关于战争幸存者，我们以最庄重的态度呈现，愿历史被铭记、和平被珍视。
+        </p>
+      </div>
+
+      <!-- 平凡女性真实故事 -->
+      <div class="ordinary-stories">
+        <h2>🌸 平凡的她 · 真实女性故事</h2>
+        <p class="sub">不是只有站在光里的才算英雄。这些故事来自我们身边的普通女性——母亲、女儿、同事、陌生人。</p>
+        <div class="ordinary-list">
+          <div class="ordinary-item">
+            <div class="ordinary-avatar">林</div>
+            <div class="ordinary-body">
+              <span class="ordinary-tag">夜班司机</span>
+              <h3>林姐 · 出租车上的守护者</h3>
+              <p>“车里常年备着两个报警器，一个给我，一个留给深夜独自乘车的姑娘。”她跑夜班十年，送过无数女孩安全到家。</p>
+            </div>
+          </div>
+          <div class="ordinary-item">
+            <div class="ordinary-avatar">苏</div>
+            <div class="ordinary-body">
+              <span class="ordinary-tag">急诊医生</span>
+              <h3>苏医生 · 凌晨三点的急诊室</h3>
+              <p>“先验伤，留好证据，后面有我们。”她见过太多沉默的伤者，所以总把这句话说在最前面。</p>
+            </div>
+          </div>
+          <div class="ordinary-item">
+            <div class="ordinary-avatar">阿</div>
+            <div class="ordinary-body">
+              <span class="ordinary-tag">支教老师</span>
+              <h3>阿依 · 教室后排的“安心盒”</h3>
+              <p>“我在教室后排放了一个‘安心盒’，女孩们再也不用因为突然来月经而请假翻山回家。”</p>
+            </div>
+          </div>
+          <div class="ordinary-item">
+            <div class="ordinary-avatar">陈</div>
+            <div class="ordinary-body">
+              <span class="ordinary-tag">超市店长</span>
+              <h3>陈女士 · 卫生间里的免费经期用品</h3>
+              <p>“我们店卫生间常年放着免费经期用品，来取的人从不用解释什么。”她说，这是女性之间不必言说的默契。</p>
+            </div>
+          </div>
+          <div class="ordinary-item">
+            <div class="ordinary-avatar">小</div>
+            <div class="ordinary-body">
+              <span class="ordinary-tag">法律援助志愿者</span>
+              <h3>小满 · 把“发生过”变成“算数”</h3>
+              <p>“每一次陪她们整理时间轴、写材料，都是在把模糊的痛苦变成可以被法律看见的证据。”</p>
+            </div>
+          </div>
+          <div class="ordinary-item">
+            <div class="ordinary-avatar">她</div>
+            <div class="ordinary-body">
+              <span class="ordinary-tag">母亲</span>
+              <h3>一位母亲 · 独自把孩子送进大学</h3>
+              <p>“我没读过多少书，但我知道读书能改变命运。”她打了三份工，把两个孩子都送进了大学。她没有名字，却有无数影子。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JS 渲染用户故事 -->
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark">珣玗</span>
+      <p>玉在山而草木润——跨境女性安全电商公益平台</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./mall.html">安全商城</a></li>
+      <li><a href="./evidence.html">留证空间</a></li>
+      <li><a href="./legal.html">她课堂</a></li>
+      <li><a href="./warm-current.html">暖流计划</a></li>
+    </ul>
+    <div class="footer-hotline">
+      <p>妇女维权热线 <b>12338</b></p>
+      <p>法律援助热线 <b>12348</b></p>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 珣玗 XUNYU · 致敬每一位真实而勇敢的女性</div>
+</footer>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/stories.js"></script>
+</body>
+</html>

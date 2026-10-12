@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>暖流计划 · 珣玗 XUNYU</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/pages.css">
+</head>
+<body class="warm-page">
+
+<header class="site-header">
+  <nav class="nav container">
+    <a class="logo" href="../index.html" aria-label="珣玗首页">
+      <span class="logo-mark">珣玗</span><span class="logo-en">XUNYU</span>
+    </a>
+    <div class="search" role="search">
+      <input type="search" placeholder="搜索…" aria-label="搜索商品"><button type="button">🔍</button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./mall.html">安全商城</a></li>
+      <li><a href="./evidence.html">留证空间</a></li>
+      <li><a href="./legal.html">她课堂</a></li>
+      <li><a href="./warm-current.html">暖流计划</a></li>
+      <li><a href="./stories.html">她们的故事</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="jue-badge">💠 珏力 <b id="jueValue">60</b></span>
+      <span id="authBox"></span>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="page-hero warm-hero">
+    <div class="container">
+      <h1>💜 暖流计划</h1>
+      <p>以"月经贫困"为起点，用 LBS 安心地图把免费经期用品的位置标出来。<br>
+      你捐一份，她就少一份窘迫。玉在山而草木润，双玉成珏，彼此有光。</p>
+    </div>
+  </section>
+
+  <section class="container page-body">
+    <div class="map-col">
+      <div class="map-card">
+        <div class="map-header">
+          <h2>安心地图</h2>
+          <span class="map-note">全国多城市试点 · 基于高德地图 JS API 渲染 · 展示合作免费经期用品点位</span>
+        </div>
+        <div class="map-container" id="mapContainer">
+          <div class="map-fallback" id="mapFallback" style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;color:var(--text-light);text-align:center;padding:20px;">
+            <p>🗺 地图加载中…</p>
+            <p style="font-size:12px;margin-top:6px;">若长时间未显示，请检查是否已配置高德地图 Key</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="transparent-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+          <h2 style="margin:0;">🔍 附近点位</h2>
+          <button type="button" class="btn btn-outline btn-sm" id="locateBtn">📍 定位并排序附近点位</button>
+          <button type="button" class="btn btn-outline btn-sm" id="myLocationBtn">🧍‍♀️ 定位到我的位置</button>
+        </div>
+        <p class="form-note" style="margin-bottom:12px;">
+          位置信息仅用于本次计算你与点位的距离，不会上传、不会保存、不会后台追踪。
+        </p>
+        <div class="point-list" id="pointList">
+          <!-- JS 渲染 -->
+        </div>
+      </div>
+
+      <div class="geofence-card">
+        <h2>🛡 地理围栏提醒</h2>
+        <p>开启后，当你靠近地图上的安心点位时，系统会主动推送提醒。</p>
+        <button type="button" class="btn btn-outline" id="geoToggle">开启附近点位提醒</button>
+        <p class="geo-status" id="geoStatus">当前状态：已关闭</p>
+      </div>
+    </div>
+
+    <aside class="warm-aside">
+      <div class="donate-card">
+        <h2>💝 我要捐赠</h2>
+        <p class="form-note">选择一种方式参与，即可为附近的她补充一份安心。</p>
+        <div class="donate-tabs" id="donateTabs">
+          <button type="button" data-mode="实物">捐实物</button>
+          <button type="button" data-mode="资金">捐资金</button>
+          <button type="button" data-mode="积分">捐珏力</button>
+        </div>
+        <form id="donateForm">
+          <div class="form-row">
+            <label for="donateItem">捐赠内容</label>
+            <input type="text" id="donateItem" placeholder="例如：日用卫生巾 10 包 / 50 元" required>
+          </div>
+          <div class="form-row">
+            <label for="donateRegion">希望投放区域</label>
+            <input type="text" id="donateRegion" placeholder="例如：上海市静安区" required>
+          </div>
+          <button type="submit" class="btn btn-accent">确认捐赠 · 珏力 +20</button>
+        </form>
+      </div>
+
+      <div class="donate-card">
+        <h2>📍 上报新点位</h2>
+        <p class="form-note">发现附近有免费经期用品存放点？分享给大家。</p>
+        <form id="reportForm">
+          <div class="form-row">
+            <label for="pointName">点位名称</label>
+            <input type="text" id="pointName" placeholder="例如：711 便利店 XX 店" required>
+          </div>
+          <div class="form-row">
+            <label for="pointAddr">地址</label>
+            <input type="text" id="pointAddr" placeholder="详细地址" required>
+          </div>
+          <button type="submit" class="btn btn-primary">提交审核</button>
+        </form>
+      </div>
+
+      <div class="transparent-card">
+        <h2>📢 捐赠透明公示</h2>
+        <div class="transparent-list" id="transparentList">
+          <!-- JS 渲染 -->
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<footer class="site-footer">
+  <div class="container footer-copy" style="border-top:none;padding-top:30px;">
+    © 2026 珣玗 XUNYU · 暖流计划公益点位持续更新中
+  </div>
+</footer>
+
+<script src="../js/utils.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/auth.js"></script>
+<!-- 高德地图 JS API -->
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=f398b437fc83d991323782cbc4cf7548"></script>
+<script src="../js/map.js"></script>
+</body>
+</html>

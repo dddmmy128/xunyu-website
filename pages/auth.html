@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 / 注册 · 珣玗 XUNYU</title>
+<meta name="description" content="珣玗用户登录与注册——跨境女性安全电商公益平台。">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/pages.css">
+<style>
+  .auth-page .page-hero { background: linear-gradient(180deg, var(--lavender), #fff); }
+  .auth-card {
+    max-width: 460px; margin: 0 auto 80px;
+    background: #fff; border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .auth-tabs {
+    display: flex; border-bottom: 1px solid #EFE6F5;
+  }
+  .auth-tabs button {
+    flex: 1; border: none; background: #fff; padding: 16px;
+    font-size: 16px; font-weight: 700; color: var(--text-light);
+    cursor: pointer; font-family: inherit;
+  }
+  .auth-tabs button.active { color: var(--purple); border-bottom: 3px solid var(--purple); }
+  .auth-panel { padding: 32px 30px 36px; }
+  .auth-panel[hidden] { display: none; }
+  .auth-panel h3 { font-size: 20px; margin-bottom: 6px; }
+  .auth-panel .sub { color: var(--text-light); font-size: 13.5px; margin-bottom: 22px; }
+  .auth-panel .form-row { margin-bottom: 16px; }
+  .auth-panel input {
+    width: 100%; border: 1.5px solid #E3D3EF; border-radius: 10px;
+    padding: 11px 14px; font-size: 15px; font-family: inherit; outline: none;
+  }
+  .auth-panel input:focus { border-color: var(--purple); background: #FFFCFF; }
+  .auth-panel .btn-primary { width: 100%; margin-top: 10px; }
+  .auth-safe {
+    margin-top: 18px; padding: 12px 14px; border-radius: 10px;
+    background: var(--lavender); font-size: 12.5px; color: var(--text-light); line-height: 1.6;
+  }
+  .auth-safe b { color: var(--purple-dark); }
+  .back-link {
+    display: inline-block; margin-top: 18px; color: var(--purple); font-size: 14px;
+  }
+  .back-link:hover { color: var(--orange); }
+</style>
+</head>
+<body class="auth-page">
+
+<header class="site-header">
+  <nav class="nav container">
+    <a class="logo" href="../index.html" aria-label="珣玗首页">
+      <span class="logo-mark">珣玗</span><span class="logo-en">XUNYU</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./mall.html">安全商城</a></li>
+      <li><a href="./evidence.html">留证空间</a></li>
+      <li><a href="./legal.html">她课堂</a></li>
+      <li><a href="./warm-current.html">暖流计划</a></li>
+      <li><a href="./stories.html">她们的故事</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="jue-badge">💠 珏力 <b id="jueValue">60</b></span>
+      <span id="authBox"></span>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="page-hero auth-hero">
+    <div class="container">
+      <h1>🔐 登录 / 注册</h1>
+      <p>一玉为珣，双玉成珏。登录后可累积珏力、捐赠公示、留下你的故事。</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button type="button" class="active" id="loginTab">登录</button>
+        <button type="button" id="registerTab">注册</button>
+      </div>
+
+      <div class="auth-panel" id="loginPanel">
+        <h3>欢迎回来</h3>
+        <p class="sub">使用手机号与密码登录你的珣玗账户</p>
+        <form id="loginForm">
+          <div class="form-row">
+            <label for="loginPhone">手机号</label>
+            <input type="tel" id="loginPhone" placeholder="请输入 11 位手机号" maxlength="11" required>
+          </div>
+          <div class="form-row">
+            <label for="loginPwd">密码</label>
+            <input type="password" id="loginPwd" placeholder="请输入密码" minlength="6" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">立即登录</button>
+        </form>
+      </div>
+
+      <div class="auth-panel" id="registerPanel" hidden>
+        <h3>加入珣玗</h3>
+        <p class="sub">注册后即可使用留证空间、暖流捐赠与她故事投稿</p>
+        <form id="registerForm">
+          <div class="form-row">
+            <label for="regPhone">手机号</label>
+            <input type="tel" id="regPhone" placeholder="请输入 11 位手机号" maxlength="11" required>
+          </div>
+          <div class="form-row">
+            <label for="regNickname">昵称</label>
+            <input type="text" id="regNickname" placeholder="给自己起个温暖的昵称" maxlength="16">
+          </div>
+          <div class="form-row">
+            <label for="regPwd">密码</label>
+            <input type="password" id="regPwd" placeholder="至少 6 位密码" minlength="6" required>
+          </div>
+          <div class="form-row">
+            <label for="regPwd2">确认密码</label>
+            <input type="password" id="regPwd2" placeholder="再次输入密码" minlength="6" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">注册账户</button>
+        </form>
+      </div>
+
+      <div class="auth-safe">
+        <b>安全提示：</b>当前版本为本地体验版，密码仅存储在你的浏览器本地，不会上传服务器。正式上线版本将采用 HTTPS 传输、后端哈希加盐与短信验证码，请勿在此输入真实常用密码。
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <a class="back-link" href="../index.html">← 返回首页</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark">珣玗</span>
+      <p>玉在山而草木润——跨境女性安全电商公益平台</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./mall.html">安全商城</a></li>
+      <li><a href="./evidence.html">留证空间</a></li>
+      <li><a href="./legal.html">她课堂</a></li>
+      <li><a href="./warm-current.html">暖流计划</a></li>
+    </ul>
+    <div class="footer-hotline">
+      <p>妇女维权热线 <b>12338</b></p>
+      <p>法律援助热线 <b>12348</b></p>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 珣玗 XUNYU · 跨境女性安全电商公益平台</div>
+</footer>
+
+<script src="../js/utils.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+(function () {
+  "use strict";
+  // 初始化珏力显示与移动菜单
+  window.setJue && window.setJue(window.getJue());
+  const navLinks = document.getElementById("navLinks");
+  document.getElementById("hamburger").addEventListener("click", () => navLinks.classList.toggle("open"));
+  navLinks.addEventListener("click", (e) => { if (e.target.tagName === "A") navLinks.classList.remove("open"); });
+})();
+</script>
+</body>
+</html>
